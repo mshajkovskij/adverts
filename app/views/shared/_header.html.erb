@@ -1,0 +1,15 @@
+<%= link_to "Adverts", root_path %><br />
+<%- if current_user && current_user.worker? %>
+  <%= link_to "My responses", responses_path %><br />
+<%- elsif current_user && current_user.client? %>
+  <%= link_to "Responses on my adverts", user_adverts_path(current_user) %><br />
+  <%= link_to "New advert", new_user_advert_path(current_user) %><br />
+<% end %>
+<%= link_to "Users", users_path %><br />
+<%- if current_user %>
+  <%= link_to "Edit profile", edit_user_registration_path%><br />
+  <%= link_to "Sing out", destroy_user_session_path, :method => :delete%><br />
+<% else %>
+  <%= link_to "Sing in", new_user_session_path %><br />
+  <%= link_to "Sing up", new_user_registration_path %><br />
+<% end %>

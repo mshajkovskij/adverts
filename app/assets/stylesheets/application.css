@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+.map {
+  width: 600px;
+  height: 400px;
+}
+
+.advert_preview {
+  width: 600px;
+  height: 200px;
+  word-wrap: break-word;
+}
+
+.advert_text {
+  width: 350px;
+  height: 250px
+}

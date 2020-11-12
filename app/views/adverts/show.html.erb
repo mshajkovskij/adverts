@@ -1,0 +1,45 @@
+<p>
+  <%= raw_textile(@advert.text) %>
+</p>
+<p>
+  <%= image_tag @advert.picture.url(:medium) %>
+</p>
+<p>
+  <label> Tags: </label>
+  <% @advert.tag_list.each do |tag| %>
+    <%= link_to tag, root_path(tag: tag) %>
+  <% end %>
+</p>
+
+<% if current_user.worker? && current_user.has_response?(@advert.id)%>
+  <p>
+    Response status: <%= current_user.response_status @advert.id %>
+  </p>
+<% elsif current_user.worker? %>
+  <p id="send_response">
+  <%= link_to "Accept to work", user_advert_responses_path(current_user, @advert, response: {user_id: current_user.id, advert_id: @advert.id}), method: :post, remote: true %>
+  </p>
+<% end %>
+
+<% if @advert.user == current_user %>
+  <p>
+    <%= link_to "Edit", edit_user_advert_path(@advert.user, @advert) %>
+  </p>
+
+  <p>
+    <%= link_to "Delete", user_advert_path(@advert.user, @advert), method: :delete %>
+  </p>
+<% end %>
+
+<div>
+  <h4>Add comment:</h4>
+  <div>
+    <%= render "comments/form" %>
+  </div>
+</div>
+<div>
+  <h4>Comments:</h4>
+  <div id="comments">
+    <%= render @advert.comments %>
+  </div>
+</div>

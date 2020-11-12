@@ -1,0 +1,19 @@
+<h1>New advert</h1>
+<%= form_for([current_user, @advert]) do |f| %>
+  <%= render 'shared/validation-messages', object: f.object %>
+  <div>
+    <%= f.label :text %>
+    <%= f.text_area :text, class: "advert_text" %>
+  </div>
+  <div>
+    <%= f.label :picture %>
+    <%= f.file_field :picture %>
+  </div>
+  <div>
+    <%= f.label :tag_list, "Tags (separated by commas)" %><br />
+    <%= f.text_field :tag_list %>
+  </div>
+  <p>
+    <%= f.submit "Edit" %>
+  </p>
+<% end %>

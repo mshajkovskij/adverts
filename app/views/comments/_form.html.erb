@@ -1,0 +1,10 @@
+<% if params[:controller] === 'adverts' %>
+  <%= form_with model:[current_user, @advert, @comment], id: "comments-form" do |f| %>
+    <%= render 'comments/form_fields', f: f %>
+  <% end  %>
+<% else  %>
+    <%= form_with model:[current_user, @advert, @comment], local: true do |f| %>
+      <%= render "shared/validation-messages", object: f.object %>
+      <%= render 'comments/form_fields', f: f %>
+    <% end  %>
+<% end  %>

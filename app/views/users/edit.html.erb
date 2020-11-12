@@ -1,0 +1,83 @@
+<h2>Edit <%= @user.login %></h2>
+
+<%= form_for(@user, url: user_path(@user), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: @user %>
+
+  <div>
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div>
+    <%= f.label :login %><br />
+    <%= f.text_field :login%>
+  </div>
+
+  <div>
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name%>
+  </div>
+
+  <div>
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+
+  <%- unless f.object.admin? %>
+    <div>
+      <%= f.label :role %><br />
+      <%= f.select :role, options_for_select(["Client", "Worker"], f.object.role ) %>
+    </div>
+  <%- end %>
+
+  <%= "Role: #{@user.role}" %>
+
+  <div>
+    <%= f.label :zip %><br />
+    <%= f.text_field :zip, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div>
+    <%= f.label :country %><br />
+    <%= f.text_field :country, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div>
+    <%= f.label :state %><br />
+    <%= f.text_field :state, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div>
+    <%= f.label :city %><br />
+    <%= f.text_field :city, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div>
+    <%= f.label :address %><br />
+    <%= f.text_field :address, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <p>
+    <div id="map" class="map">Enter the correct address</div>
+  </p>
+
+  <div>
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+<h3>Cancel account</h3>
+
+<p><%= button_to "Cancel account", user_path(@user), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+<% provide :head_tags do %>
+  <script>
+    document.addEventListener("turbolinks:load", function() {
+      window.fullAddress = function(){
+        return `${document.getElementById('user_zip').value} ${document.getElementById('user_country').value} ${document.getElementById('user_state').value} ${document.getElementById('user_city').value} ${document.getElementById('user_address').value}`;
+      }
+
+      codeAddress(fullAddress());
+    });
+  </script>
+<% end %>

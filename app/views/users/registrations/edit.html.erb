@@ -1,0 +1,100 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :login %><br />
+    <%= f.text_field :login%>
+  </div>
+
+  <div class="field">
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name%>
+  </div>
+
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </div>
+
+  <%- unless f.object.admin? %>
+    <div>
+      <%= f.label :role %><br />
+      <%= f.select :role, options_for_select(["Client", "Worker"], f.object.role ) %>
+    </div>
+  <%- end %>
+
+  <div class="field">
+    <%= f.label :zip %><br />
+    <%= f.text_field :zip, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :country %><br />
+    <%= f.text_field :country, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, oninput: "codeAddress(fullAddress());"%>
+  </div>
+
+  <p>
+    <div id="map" class="map">Enter the correct address</div>
+  </p>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+<% provide :head_tags do %>
+  <script>
+    document.addEventListener("turbolinks:load", function() {
+      window.fullAddress = function(){
+        return `${document.getElementById('user_zip').value} ${document.getElementById('user_country').value} ${document.getElementById('user_state').value} ${document.getElementById('user_city').value} ${document.getElementById('user_address').value}`;
+      }
+
+      codeAddress(fullAddress());
+    });
+  </script>
+<% end %>

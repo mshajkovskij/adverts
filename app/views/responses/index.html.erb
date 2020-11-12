@@ -1,0 +1,13 @@
+<h1>Responses</h1>
+
+<table>
+  <tbody>
+    <% @worker_responses.each do |response| %>
+      <tr>
+        <td><%= image_tag response.advert.picture.url(:thumb) %></td>
+        <td><div class="advert_preview"><%= raw_textile(preview response.advert) %></div></td>
+        <td><%= response.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

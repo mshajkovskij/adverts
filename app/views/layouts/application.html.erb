@@ -6,10 +6,15 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.google_maps_api_key %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= yield(:head_tags) %>
   </head>
 
   <body>
+    <%= render 'shared/header' %>
+    <%= render 'shared/flash' %>
     <%= yield %>
   </body>
 </html>

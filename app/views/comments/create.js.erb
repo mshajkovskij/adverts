@@ -1,0 +1,8 @@
+<% if @comment.errors.any? %>
+  document.getElementById('error_explanation') ? document.getElementById('error_explanation').remove() : null ;
+  document.querySelector('comments-form').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "shared/validation-messages", object: @comment) %>');
+<% else %>
+  document.getElementById('error_explanation') ? document.getElementById('error_explanation').remove() : null ;
+  document.getElementById('comments').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>') ;
+  document.getElementById('comments-form').reset();
+<% end %>

@@ -1,0 +1,28 @@
+<h1>Responses</h1>
+
+<table>
+  <tbody>
+    <% @client_adverts.each do |advert| %>
+      <tr>
+        <td><%= image_tag advert.picture.url(:thumb) %></td>
+        <td><div class="advert_preview"><%= raw_textile(preview advert) %></div></td>
+        <tr>
+          <td> Requests for work </td>
+        </tr>
+        <%- advert.responses.each do |response| %>
+          <tr>
+            <td><%= link_to "#{response.user.full_name}", response.user %></td>
+            <%- if response.status == "for_approval" %>
+              <tr id="response_status_<%= response.id %>">
+                <td><%= link_to "Accept", user_advert_response_path(current_user, response.advert, response, response: {status: "accepted"}), method: :patch, remote: true %></td>
+                <td><%= link_to "Decline", user_advert_response_path(current_user, response.advert, response, response: {status: "declined"}), method: :patch, remote: true %></td>
+              </tr>
+            <%- else %>
+              <td><%= response.status %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

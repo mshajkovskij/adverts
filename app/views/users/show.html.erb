@@ -1,0 +1,45 @@
+<h2>User</h2>
+
+<p>
+  <%= "Email: #{@user.email}" %>
+</p>
+<p>
+  <%= "Login: #{@user.login}" %>
+</p>
+<p>
+  <%= "Full name: #{@user.full_name}" %>
+</p>
+<p>
+  <%= "Birthday: #{@user.birthday}" %>
+</p>
+<p>
+  <%= "Zip: #{@user.zip}" %>
+</p>
+<p>
+  <%= "Country: #{@user.country}" %>
+</p>
+<p>
+  <%= "State: #{@user.state}" %>
+</p>
+<p>
+  <%= "City: #{@user.city}" %>
+</p>
+<p>
+  <%= "Address: #{@user.address}" %>
+</p>
+<p>
+  <%= "Role: #{@user.role}" %>
+</p>
+<p>
+  <div id="map" class="map"></div>
+</p>
+
+<%= hidden_field_tag 'full_address', "#{@user.zip} #{@user.country} #{@user.state} #{@user.city} #{@user.address}" %>
+
+<% provide :head_tags do %>
+  <script>
+    document.addEventListener("turbolinks:load", function() {
+      codeAddress(document.getElementById('full_address').value);
+    });
+  </script>
+<% end %>
